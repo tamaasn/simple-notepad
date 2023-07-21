@@ -102,9 +102,10 @@ void Frame::open_file(wxCommandEvent &event){
     wfstream read(filename);
     read.imbue(locale(""));
     wstring fileoutput;
-    while (getline(read , fileoutput)){
+    while(getline(read , fileoutput)){
         text->WriteText(fileoutput+"\n");
     }
+    text->WriteText(fileoutput);
     this->SetStatusText(filename);
     
 
