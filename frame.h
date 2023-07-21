@@ -9,6 +9,7 @@ using namespace std;
 class Frame: public wxFrame{
     public:
         Frame();
+        ~Frame();
     private:
         int open_id=1;
         int save_id=2;
@@ -21,6 +22,7 @@ class Frame: public wxFrame{
         int copy_id=9;
         int paste_id=10;
         int cut_id=11;
+        int window_id=12;
 
         void about(wxCommandEvent &event);
         void open_file(wxCommandEvent &event);
@@ -33,13 +35,15 @@ class Frame: public wxFrame{
         void copy(wxCommandEvent &event);
         void paste(wxCommandEvent &event);
         void cut(wxCommandEvent &event);
+        void resize(wxSizeEvent &event);
 
 
         bool fileopened=false;
 
         string filename;
         string get_save_filepath();
-
+        
+        wxMenuBar *menubar;
         wxMenu *menufile;
         wxMenu *menuedit;
         wxMenu *menuother;

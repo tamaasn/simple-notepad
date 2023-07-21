@@ -2,13 +2,13 @@
 Frame::Frame(): wxFrame(nullptr , wxID_ANY , "Simple Text Editor" , wxPoint(500,500) ,wxSize(550,450)){
     menufile = new wxMenu;
     menuother = new wxMenu;
+    cout << "test123" << endl;
     menuedit = new wxMenu;
     
     ios::sync_with_stdio(false);
     wcout.imbue(locale(""));
 
     menufile->Append(open_id , "Open file\tCtrl-O" , "Open file");
-    menufile->AppendSeparator();
     menufile->Append(save_id , "Save file\tCtrl-S" , "Save file");
     menufile->Append(new_id , "New file\tCtrl-N" , "New file");
     menufile->Append(saveas_id , "Save as\tCtrl-Shift-S" , "Save as");
@@ -18,7 +18,7 @@ Frame::Frame(): wxFrame(nullptr , wxID_ANY , "Simple Text Editor" , wxPoint(500,
     menuother->Append(wxID_EXIT , "exit","exit this program");
     
     text = new wxRichTextCtrl(this , text_id , _T(""), wxPoint(0,10) , wxSize(550,400));
-    wxMenuBar *menubar= new wxMenuBar;
+    menubar= new wxMenuBar;
     menubar->SetSize(wxSize(30,100));
     
     menuedit->Append(redo_id , "Redo\tCtrl-Y" , "Redo");
@@ -45,6 +45,20 @@ Frame::Frame(): wxFrame(nullptr , wxID_ANY , "Simple Text Editor" , wxPoint(500,
     Bind(wxEVT_MENU , &Frame::copy , this , copy_id);
     Bind(wxEVT_MENU , &Frame::paste , this , paste_id);
     Bind(wxEVT_MENU , &Frame::cut , this , cut_id);
+    Bind(wxEVT_SIZE , &Frame::resize , this , wxID_ANY);
+}
+
+Frame::~Frame(){
+    /*delete menubar;
+    delete menufile;
+    delete menuedit;
+    delete menuother;
+    delete text;*/
+}
+
+void Frame::resize(wxSizeEvent &event){
+    cout << "Resizing" << endl;
+    text->SetSize(event.GetSize());
 }
 
 void Frame::cut(wxCommandEvent &event){
@@ -69,7 +83,7 @@ void Frame::paste(wxCommandEvent &event){
 
 
 void Frame::exit_program(wxCommandEvent &event){
-    exit(0);
+    this->Close(true);
 }
 
 void Frame::about(wxCommandEvent &event){
